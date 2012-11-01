@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ипотечный калькулятор</string>
+    <string name="credit_sum">Сумма кредита</string>
+    <string name="credit_duration_month">Срок кредита, мес</string>
+    <string name="percentage">Процентная ставка</string>
+    <string name="monthly_payment">Ежемесячный платеж</string>
+    <string name="calculate">Рассчитать</string>
+</resources>
