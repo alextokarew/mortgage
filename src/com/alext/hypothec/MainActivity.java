@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import com.alext.hypothec.model.HypothecCalculator;
+import com.alext.hypothec.model.MortgageCalculator;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 public class MainActivity extends Activity {
     /**
@@ -21,7 +19,7 @@ public class MainActivity extends Activity {
     }
 
     public void calculate(View button) {
-        HypothecCalculator calculator = new HypothecCalculator(
+        MortgageCalculator calculator = new MortgageCalculator(
                 editTextToInt(R.id.credit_sum),
                 editTextToDoubleBigDecimal(R.id.percentage),
                 editTextToInt(R.id.credit_duration_month)
