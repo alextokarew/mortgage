@@ -5,10 +5,10 @@
     <string name="ok">ОК</string>
     <string name="cancel">Отмена</string>
 
-    <string name="credit_sum">Сумма кредита *</string>
-    <string name="credit_duration_month">Срок кредита, мес *</string>
+    <string name="credit_sum">Сумма кредита</string>
+    <string name="credit_duration_month">Срок кредита, мес</string>
     <string name="actual_credit_duration">Фактический срок кредита, мес</string>
-    <string name="percentage">Процентная ставка *</string>
+    <string name="percentage">Процентная ставка</string>
     <string name="monthly_payment">Ежемесячный платеж</string>
     <string name="calculate">Рассчитать</string>
 
@@ -18,5 +18,5 @@
 
     <string name="inject_amount">Сумма</string>
     <string name="inject_month">Месяц внесения</string>
-    <string name="required_fields">* - обязательные поля</string>
+    <string name="required_fields">Красным отмечены обязательные поля</string>
 </resources>

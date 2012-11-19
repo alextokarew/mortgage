@@ -4,10 +4,12 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
+
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/credit_sum"
+            android:textColor="@color/red"
             />
     <EditText
         android:layout_width="fill_parent"
@@ -19,6 +21,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/credit_duration_month"
+            android:textColor="@color/red"
             />
     <EditText
             android:layout_width="fill_parent"
@@ -29,6 +32,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/percentage"
+            android:textColor="@color/red"
             />
     <EditText
             android:layout_width="fill_parent"
