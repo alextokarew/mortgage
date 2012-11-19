@@ -45,11 +45,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/monthly_payment"
             android:inputType="numberDecimal"/>
-    <Button
+    <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/calculate"
-            android:onClick="calculate"
+            android:text="@string/actual_credit_duration"
+            />
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/actual_credit_duration"
+            android:inputType="number"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/required_fields"
             />
 
 </LinearLayout>

@@ -5,11 +5,11 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.*;
 
-public class MortgageCalculator {
-    private final int creditSum;
-    private final BigDecimal percent;
-    private final int estimatedMonths;
-    private final BigDecimal monthlyPayment;
+public class MortgageCalculator extends Observable {
+    private int creditSum;
+    private BigDecimal percent;
+    private int estimatedMonths;
+    private BigDecimal monthlyPayment;
     private BigDecimal lastPayment;
     private int actualMonths;
     private List<BigDecimal> repayDistribution;
@@ -20,25 +20,35 @@ public class MortgageCalculator {
     private static final MathContext MATH_CONTEXT = MathContext.DECIMAL128;
     private static final double LAST_PAYMENT_THRESHOLD = 1.20;
 
-    public MortgageCalculator(int creditSum, BigDecimal percent, int estimatedMonths) {
+    public void setCreditSum(int creditSum) {
+        setChanged();
         this.creditSum = creditSum;
-        this.percent = percent;
-        this.estimatedMonths = estimatedMonths;
-        this.monthlyPayment = calculateMonthlyPayment();
     }
 
-    public MortgageCalculator(int creditSum, BigDecimal percent, int estimatedMonths, BigDecimal monthlyPayment) {
-        this.creditSum = creditSum;
-        this.percent = percent;
+    public void setEstimatedMonths(int estimatedMonths) {
+        setChanged();
         this.estimatedMonths = estimatedMonths;
+    }
+
+    public void setPercent(BigDecimal percent) {
+        setChanged();
+        this.percent = percent;
+    }
+
+    public void setMonthlyPayment(BigDecimal monthlyPayment) {
+        setChanged();
         this.monthlyPayment = monthlyPayment;
     }
 
     public BigDecimal getMonthlyPayment() {
+        if (monthlyPayment==null) {
+            monthlyPayment = calculateMonthlyPayment();
+        }
         return monthlyPayment;
     }
 
     public void injectPayment(BigDecimal injectedPayment, int month) {
+        setChanged();
         if (!injections.containsKey(month)) {
             injections.put(month,BigDecimal.ZERO);
         }
@@ -46,23 +56,33 @@ public class MortgageCalculator {
     }
 
     public void removeInjectedPayment(int month) {
+        setChanged();
         injections.remove(month);
     }
 
-    public int getActualMonths() {
+    public Integer getActualMonths() {
+        calculateDistributions();
         return actualMonths;
     }
 
     public List<BigDecimal> getRepayDistribution() {
+        calculateDistributions();
         return Collections.unmodifiableList(repayDistribution);
     }
 
     public List<BigDecimal> getPercentsDistribution() {
+        calculateDistributions();
         return Collections.unmodifiableList(percentsDistribution);
     }
 
     public List<BigDecimal> getRemaindersDistribution() {
+        calculateDistributions();
         return Collections.unmodifiableList(remaindersDistribution);
+    }
+
+    public BigDecimal getLastPayment() {
+        calculateDistributions();
+        return lastPayment;
     }
 
     private BigDecimal calculateMonthlyPayment() {
@@ -72,17 +92,21 @@ public class MortgageCalculator {
 
     }
 
-    private void calculateDistributions() {
+    public void calculateDistributions() {
+        if (!hasChanged()) {
+            return;
+        }
+
         BigDecimal remainder = BigDecimal.valueOf(creditSum);
         final BigDecimal monthPercent = percent.divide(BigDecimal.valueOf(1200), MATH_CONTEXT);
         percentsDistribution = new ArrayList<BigDecimal>(estimatedMonths);
         repayDistribution = new ArrayList<BigDecimal>(estimatedMonths);
         remaindersDistribution = new ArrayList<BigDecimal>(estimatedMonths);
         int month =0;
-        while (remainder.compareTo(monthlyPayment.multiply(BigDecimal.valueOf(LAST_PAYMENT_THRESHOLD)))>0) {
+        while (remainder.compareTo(getMonthlyPayment().multiply(BigDecimal.valueOf(LAST_PAYMENT_THRESHOLD)))>0) {
             month++;
             BigDecimal percentSum = calculatePercents(remainder, monthPercent);
-            BigDecimal repay = monthlyPayment.subtract(percentSum);
+            BigDecimal repay = getMonthlyPayment().subtract(percentSum);
             if (injections.containsKey(month)) {
                 remainder = remainder.subtract(injections.get(month));
             }
@@ -96,6 +120,7 @@ public class MortgageCalculator {
         remaindersDistribution.add(BigDecimal.ZERO);
         lastPayment = remainder.add(percentsDistribution.get(month));
         actualMonths = month+1;
+        notifyObservers();
     }
 
     private BigDecimal calculatePercents(BigDecimal base, BigDecimal percentsRate) {
@@ -103,25 +128,29 @@ public class MortgageCalculator {
     }
 
     public static void main(String[] args) {
-        MortgageCalculator calc = new MortgageCalculator(3500000,new BigDecimal("14.0"),120);
+        //TODO: to unit test
+        MortgageCalculator calc = new MortgageCalculator();
+        calc.setCreditSum(3500000);
+        calc.setPercent(new BigDecimal("14.0"));
+        calc.setEstimatedMonths(120);
         calc.calculateDistributions();
         System.out.println(calc.getMonthlyPayment());
-        System.out.println(calc.percentsDistribution);
-        System.out.println(calc.repayDistribution);
-        System.out.println(calc.remaindersDistribution);
-        System.out.println(calc.lastPayment);
-        System.out.println(calc.actualMonths);
+        System.out.println(calc.getPercentsDistribution());
+        System.out.println(calc.getRepayDistribution());
+        System.out.println(calc.getRemaindersDistribution());
+        System.out.println(calc.getLastPayment());
+        System.out.println(calc.getActualMonths());
         calc.injectPayment(BigDecimal.valueOf(200000),12);
         calc.injectPayment(BigDecimal.valueOf(200000),24);
         calc.injectPayment(BigDecimal.valueOf(200000),36);
         calc.injectPayment(BigDecimal.valueOf(200000),48);
         calc.calculateDistributions();
         System.out.println(calc.getMonthlyPayment());
-        System.out.println(calc.percentsDistribution);
-        System.out.println(calc.repayDistribution);
-        System.out.println(calc.remaindersDistribution);
-        System.out.println(calc.lastPayment);
-        System.out.println(calc.actualMonths);
+        System.out.println(calc.getPercentsDistribution());
+        System.out.println(calc.getRepayDistribution());
+        System.out.println(calc.getRemaindersDistribution());
+        System.out.println(calc.getLastPayment());
+        System.out.println(calc.getActualMonths());
     }
 
 }

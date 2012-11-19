@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/calculate_item"
+          android:title="@string/calculate"
+            />
+    <item android:id="@+id/inject_item"
+          android:title="@string/inject_payment" />
+    <item android:id="@+id/payments_distribution_item"
+          android:title="@string/payments_distribution" />
+    <item android:id="@+id/reminder_distribution_item"
+          android:title="@string/reminder_distribution" />
+</menu>
