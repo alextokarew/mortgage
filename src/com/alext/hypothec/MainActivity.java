@@ -2,6 +2,8 @@ package com.alext.hypothec;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,9 +45,9 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean disable = Utils.isEmptyField(R.id.credit_sum,getWindow().getDecorView()) ||
-                Utils.isEmptyField(R.id.percentage, getWindow().getDecorView()) ||
-                Utils.isEmptyField(R.id.credit_duration_month, getWindow().getDecorView());
+        boolean disable = Utils.isEmptyField((EditText)findViewById(R.id.credit_sum)) ||
+                Utils.isEmptyField((EditText)findViewById(R.id.percentage)) ||
+                Utils.isEmptyField((EditText)findViewById(R.id.credit_duration_month));
 
         menu.findItem(R.id.calculate_item).setEnabled(!disable);
         menu.findItem(R.id.inject_item).setEnabled(!disable);
@@ -68,13 +70,13 @@ public class MainActivity extends Activity {
     }
 
     private void calculate() {
-        calculator.setCreditSum(Utils.editTextToInt(R.id.credit_sum,getWindow().getDecorView()));
-        calculator.setPercent(Utils.editTextToBigDecimal(R.id.percentage,getWindow().getDecorView()));
-        calculator.setEstimatedMonths(Utils.editTextToInt(R.id.credit_duration_month,getWindow().getDecorView()));
-        if (Utils.isEmptyField(R.id.monthly_payment, getWindow().getDecorView())) {
+        calculator.setCreditSum(Utils.editTextToInt((EditText)findViewById(R.id.credit_sum)));
+        calculator.setPercent(Utils.editTextToBigDecimal((EditText)findViewById(R.id.percentage)));
+        calculator.setEstimatedMonths(Utils.editTextToInt((EditText)findViewById(R.id.credit_duration_month)));
+        if (Utils.isEmptyField((EditText)findViewById(R.id.monthly_payment))) {
             calculator.setMonthlyPayment(null);
         } else {
-            calculator.setMonthlyPayment(Utils.editTextToBigDecimal(R.id.monthly_payment,getWindow().getDecorView()));
+            calculator.setMonthlyPayment(Utils.editTextToBigDecimal((EditText)findViewById(R.id.monthly_payment)));
         }
         calculator.calculateDistributions();
     }

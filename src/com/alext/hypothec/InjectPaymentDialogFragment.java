@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import com.alext.hypothec.model.MortgageCalculator;
 
 import java.math.BigDecimal;
@@ -29,12 +30,12 @@ public class InjectPaymentDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (Utils.isEmptyField(R.id.inject_amount, rootView) ||
-                                Utils.isEmptyField(R.id.inject_month, rootView)) {
+                        if (Utils.isEmptyField((EditText)rootView.findViewById(R.id.inject_amount)) ||
+                                Utils.isEmptyField((EditText)rootView.findViewById(R.id.inject_month))) {
                             return;
                         }
-                        calculator.injectPayment(Utils.editTextToBigDecimal(R.id.inject_amount, rootView),
-                                Utils.editTextToInt(R.id.inject_month, rootView));
+                        calculator.injectPayment(Utils.editTextToBigDecimal((EditText)rootView.findViewById(R.id.inject_amount)),
+                                Utils.editTextToInt((EditText)rootView.findViewById(R.id.inject_month)));
                         calculator.calculateDistributions();
                     }
                 })

@@ -9,15 +9,15 @@ public class Utils {
     private Utils() {
     }
 
-    public static int editTextToInt(int id, View view) {
-        return Integer.valueOf(((EditText) view.findViewById(id)).getText().toString());
+    public static int editTextToInt(EditText editText) {
+        return Integer.valueOf(editText.getText().toString());
     }
 
-    public static BigDecimal editTextToBigDecimal(int id, View view) {
-        return new BigDecimal(((EditText) view.findViewById(id)).getText().toString());
+    public static BigDecimal editTextToBigDecimal(EditText editText) {
+        return new BigDecimal(editText.getText().toString());
     }
 
-    public static boolean isEmptyField(int id, View view) {
-        return ((EditText) view.findViewById(id)).length()==0;
+    public static boolean isEmptyField(EditText editText) {
+        return editText.getText().toString().length()==0;
     }
 }
