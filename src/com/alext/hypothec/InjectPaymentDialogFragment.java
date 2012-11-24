@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 
 public class InjectPaymentDialogFragment extends DialogFragment {
 
-    private MortgageCalculator calculator;
+    private MainActivity mainActivity;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -34,9 +34,8 @@ public class InjectPaymentDialogFragment extends DialogFragment {
                                 Utils.isEmptyField((EditText)rootView.findViewById(R.id.inject_month))) {
                             return;
                         }
-                        calculator.injectPayment(Utils.editTextToBigDecimal((EditText)rootView.findViewById(R.id.inject_amount)),
+                        mainActivity.injectPayment(Utils.editTextToBigDecimal((EditText)rootView.findViewById(R.id.inject_amount)),
                                 Utils.editTextToInt((EditText)rootView.findViewById(R.id.inject_month)));
-                        calculator.calculateDistributions();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -50,6 +49,6 @@ public class InjectPaymentDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        calculator = ((MainActivity)activity).getCalculator();
+        mainActivity = ((MainActivity)activity);
     }
 }

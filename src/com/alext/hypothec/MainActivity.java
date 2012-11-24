@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import com.alext.hypothec.model.CalculationResult;
 import com.alext.hypothec.model.MortgageCalculator;
 
 import java.math.BigDecimal;
@@ -22,18 +23,6 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        calculator.addObserver(new Observer() {
-            @Override
-            public void update(Observable observable, Object o) {
-                MortgageCalculator calculator = (MortgageCalculator) observable;
-
-                EditText monthlyPayment = (EditText) findViewById(R.id.monthly_payment);
-                monthlyPayment.setText(calculator.getMonthlyPayment().toString());
-                EditText actualDuration = (EditText) findViewById(R.id.actual_credit_duration);
-                actualDuration.setText(calculator.getActualMonths().toString());
-            }
-        });
     }
 
     @Override
@@ -78,12 +67,18 @@ public class MainActivity extends Activity {
         } else {
             calculator.setMonthlyPayment(Utils.editTextToBigDecimal((EditText)findViewById(R.id.monthly_payment)));
         }
-        calculator.calculateDistributions();
+        updateResults(calculator.calculateDistributions());
     }
 
+    void injectPayment(BigDecimal injectPayment, int month) {
+        calculator.injectPayment(injectPayment,month);
+        updateResults(calculator.calculateDistributions());
+    }
 
-
-    MortgageCalculator getCalculator() {
-        return calculator;
+    private void updateResults(CalculationResult result) {
+        EditText monthlyPayment = (EditText) findViewById(R.id.monthly_payment);
+        monthlyPayment.setText(result.getMonthlyPayment().toString());
+        EditText actualDuration = (EditText) findViewById(R.id.actual_credit_duration);
+        actualDuration.setText(result.getActualMonths().toString());
     }
 }
