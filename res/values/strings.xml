@@ -2,6 +2,9 @@
 <resources>
     <string name="app_name">Ипотечный калькулятор</string>
 
+    <string name="tab_initial_data">Исходные данные</string>
+    <string name="tab_results">Результаты</string>
+
     <string name="ok">ОК</string>
     <string name="cancel">Отмена</string>
 

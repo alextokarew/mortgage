@@ -1,6 +1,9 @@
 package com.alext.hypothec;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,33 +18,31 @@ import java.math.BigDecimal;
 import java.util.Observable;
 import java.util.Observer;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ActionBar.TabListener {
 
     private final MortgageCalculator calculator = new MortgageCalculator();
+    private Fragment initialDataFragment;
+    private Fragment resultsFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        initialDataFragment = getFragmentManager().findFragmentById(R.id.initial_data_fragment);
+        resultsFragment = getFragmentManager().findFragmentById(R.id.results_fragment);
+
+        ActionBar bar = getActionBar();
+        bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        bar.addTab(bar.newTab().setText(R.string.tab_initial_data).setTabListener(this));
+        bar.addTab(bar.newTab().setText(R.string.tab_results).setTabListener(this));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean disable = Utils.isEmptyField((EditText)findViewById(R.id.credit_sum)) ||
-                Utils.isEmptyField((EditText)findViewById(R.id.percentage)) ||
-                Utils.isEmptyField((EditText)findViewById(R.id.credit_duration_month));
-
-        menu.findItem(R.id.calculate_item).setEnabled(!disable);
-        menu.findItem(R.id.inject_item).setEnabled(!disable);
-        menu.findItem(R.id.payments_distribution_item).setEnabled(!disable);
-        menu.findItem(R.id.reminder_distribution_item).setEnabled(!disable);
         return true;
     }
 
@@ -67,18 +68,26 @@ public class MainActivity extends Activity {
         } else {
             calculator.setMonthlyPayment(Utils.editTextToBigDecimal((EditText)findViewById(R.id.monthly_payment)));
         }
-        updateResults(calculator.calculateDistributions());
     }
 
     void injectPayment(BigDecimal injectPayment, int month) {
         calculator.injectPayment(injectPayment,month);
-        updateResults(calculator.calculateDistributions());
     }
 
-    private void updateResults(CalculationResult result) {
-        EditText monthlyPayment = (EditText) findViewById(R.id.monthly_payment);
-        monthlyPayment.setText(result.getMonthlyPayment().toString());
-        EditText actualDuration = (EditText) findViewById(R.id.actual_credit_duration);
-        actualDuration.setText(result.getActualMonths().toString());
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        int position = tab.getPosition();
+        fragmentTransaction.show(position==1?resultsFragment:initialDataFragment);
+        fragmentTransaction.hide(position==1?initialDataFragment:resultsFragment);
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
