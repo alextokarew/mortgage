@@ -9,13 +9,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import com.alext.hypothec.model.MortgageCalculator;
-
-import java.math.BigDecimal;
 
 public class InjectPaymentDialogFragment extends DialogFragment {
 
-    private MainActivity mainActivity;
+    private InitialDataFragment initialDataFragment;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -34,8 +31,8 @@ public class InjectPaymentDialogFragment extends DialogFragment {
                                 Utils.isEmptyField((EditText)rootView.findViewById(R.id.inject_month))) {
                             return;
                         }
-                        mainActivity.injectPayment(Utils.editTextToBigDecimal((EditText)rootView.findViewById(R.id.inject_amount)),
-                                Utils.editTextToInt((EditText)rootView.findViewById(R.id.inject_month)));
+                        initialDataFragment.injectPayment(Utils.editTextToBigDecimal((EditText) rootView.findViewById(R.id.inject_amount)),
+                                Utils.editTextToInt((EditText) rootView.findViewById(R.id.inject_month)));
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -49,6 +46,6 @@ public class InjectPaymentDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mainActivity = ((MainActivity)activity);
+        //TODO: initialDataFragment = ((MainActivity)activity).getSupportFragmentManager().getFragment();
     }
 }

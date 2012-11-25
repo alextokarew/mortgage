@@ -1,6 +1,5 @@
 package com.alext.hypothec;
 
-import android.view.View;
 import android.widget.EditText;
 
 import java.math.BigDecimal;
