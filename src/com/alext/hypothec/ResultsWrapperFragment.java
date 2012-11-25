@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.alext.hypothec.model.CalculationResult;
 
 /**
@@ -39,6 +40,9 @@ public class ResultsWrapperFragment extends Fragment {
             swapFragments(resultsFragment,noResultsFragment);
         } else {
             swapFragments(noResultsFragment, resultsFragment);
+            ((TextView)mainView.findViewById(R.id.monthly_payment)).setText(result.getMonthlyPayment().toString());
+            ((TextView)mainView.findViewById(R.id.actual_months)).setText(result.getActualMonths().toString());
+            ((TextView)mainView.findViewById(R.id.overall_amount)).setText(result.getOverallAmount().toString());
         }
     }
 

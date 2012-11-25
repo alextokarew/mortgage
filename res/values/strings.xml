@@ -13,6 +13,7 @@
     <string name="actual_credit_duration">Фактический срок кредита, мес</string>
     <string name="percentage">Процентная ставка</string>
     <string name="monthly_payment">Ежемесячный платеж</string>
+    <string name="overall_amount">Общая сумма выплат</string>
     <string name="calculate">Рассчитать</string>
 
     <string name="inject_payment">Досрочный платеж</string>
