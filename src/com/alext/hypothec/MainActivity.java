@@ -1,7 +1,6 @@
 package com.alext.hypothec;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -9,14 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
-import com.alext.hypothec.model.MortgageCalculator;
-
-import java.math.BigDecimal;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
+    private static final int INITIAL_DATA_ITEM = 0;
+    private static final int RESULTS_ITEM = 1;
+
     private ViewPager viewPager;
+    private InitialDataFragment initialDataFragment;
+    private ResultsWrapperFragment resultsWrapperFragment;
     private MainPagerAdapter mainPagerAdapter;
 
     @Override
@@ -24,13 +24,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        initialDataFragment = new InitialDataFragment();
+        resultsWrapperFragment = new ResultsWrapperFragment();
+
+        mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),initialDataFragment,resultsWrapperFragment);
         viewPager = (ViewPager)findViewById(R.id.pager);
         viewPager.setAdapter(mainPagerAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 getActionBar().setSelectedNavigationItem(position);
+                if (position==RESULTS_ITEM) {
+                    resultsWrapperFragment.setResult(initialDataFragment.calculate());
+                }
             }
         });
 
@@ -39,7 +45,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         bar.addTab(bar.newTab().setText(R.string.tab_initial_data).setTabListener(this));
         bar.addTab(bar.newTab().setText(R.string.tab_results).setTabListener(this));
-        System.out.println("blablabla");
     }
 
     @Override

@@ -22,4 +22,5 @@
     <string name="inject_amount">Сумма</string>
     <string name="inject_month">Месяц внесения</string>
     <string name="required_fields">Красным отмечены обязательные поля</string>
+    <string name="no_required_fields">Для расчета необходимо задать следующие параметры:</string>
 </resources>

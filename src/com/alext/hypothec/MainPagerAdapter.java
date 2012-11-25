@@ -2,7 +2,11 @@ package com.alext.hypothec;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,20 +15,18 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  * Time: 7:42
  * To change this template use File | Settings | File Templates.
  */
-public class MainPagerAdapter extends FragmentStatePagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    private InitialDataFragment initialDataFragment;
-    private ResultsFragment resultsFragment;
+    private final List<Fragment> fragments;
 
-    public MainPagerAdapter(FragmentManager fm) {
+    public MainPagerAdapter(FragmentManager fm, InitialDataFragment initialDataFragment, ResultsWrapperFragment resultsWrapperFragment) {
         super(fm);
-        this.initialDataFragment = new InitialDataFragment();
-        this.resultsFragment = new ResultsFragment();
+        fragments = Collections.unmodifiableList(Arrays.asList(initialDataFragment,resultsWrapperFragment));
     }
 
     @Override
-    public Fragment getItem(int i) {
-        return i==1?resultsFragment:initialDataFragment;
+    public Fragment getItem(int item) {
+        return fragments.get(item);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import com.alext.hypothec.model.CalculationResult;
 import com.alext.hypothec.model.MortgageCalculator;
 
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ public class InitialDataFragment extends Fragment {
 
     private final MortgageCalculator calculator = new MortgageCalculator();
     private View mainView;
+    private ResultsWrapperFragment resultsWrapperFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +30,13 @@ public class InitialDataFragment extends Fragment {
         return mainView;
     }
 
-    private void calculate() {
+    public CalculationResult calculate() {
+        if (Utils.isEmptyField((EditText)mainView.findViewById(R.id.credit_sum)) ||
+            Utils.isEmptyField((EditText)mainView.findViewById(R.id.percentage)) ||
+            Utils.isEmptyField((EditText)mainView.findViewById(R.id.credit_duration_month))) {
+            return null;
+        }
+
         calculator.setCreditSum(Utils.editTextToInt((EditText)mainView.findViewById(R.id.credit_sum)));
         calculator.setPercent(Utils.editTextToBigDecimal((EditText)mainView.findViewById(R.id.percentage)));
         calculator.setEstimatedMonths(Utils.editTextToInt((EditText)mainView.findViewById(R.id.credit_duration_month)));
@@ -37,6 +45,7 @@ public class InitialDataFragment extends Fragment {
         } else {
             calculator.setMonthlyPayment(Utils.editTextToBigDecimal((EditText)mainView.findViewById(R.id.monthly_payment)));
         }
+        return calculator.calculateDistributions();
     }
 
     void injectPayment(BigDecimal injectPayment, int month) {
