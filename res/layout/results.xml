@@ -31,5 +31,14 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/overall_amount" />
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/overall_percents"
+            />
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/overall_percents" />
 
 </LinearLayout>

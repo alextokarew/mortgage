@@ -98,7 +98,14 @@ public class MortgageCalculator {
         remaindersDistribution.add(BigDecimal.ZERO);
         BigDecimal lastPayment = remainder.add(percentsDistribution.get(month));
         int actualMonths = month+1;
-        lastResult = new CalculationResult(monthlyPayment,overallAmount,lastPayment,actualMonths,repayDistribution,percentsDistribution,remaindersDistribution);
+        lastResult = new CalculationResult(monthlyPayment,
+                overallAmount,
+                overallAmount.subtract(BigDecimal.valueOf(creditSum)),
+                lastPayment,
+                actualMonths,
+                repayDistribution,
+                percentsDistribution,
+                remaindersDistribution);
         return lastResult;
     }
 

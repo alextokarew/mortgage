@@ -43,6 +43,7 @@ public class ResultsWrapperFragment extends Fragment {
             ((TextView)mainView.findViewById(R.id.monthly_payment)).setText(result.getMonthlyPayment().toString());
             ((TextView)mainView.findViewById(R.id.actual_months)).setText(result.getActualMonths().toString());
             ((TextView)mainView.findViewById(R.id.overall_amount)).setText(result.getOverallAmount().toString());
+            ((TextView)mainView.findViewById(R.id.overall_percents)).setText(result.getOverallPercents().toString());
         }
     }
 

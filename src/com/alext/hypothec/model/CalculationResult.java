@@ -14,6 +14,7 @@ import java.util.List;
 public class CalculationResult {
     private final BigDecimal monthlyPayment;
     private final BigDecimal overallAmount;
+    private final BigDecimal overallPercents;
     private final BigDecimal lastPayment;
     private final int actualMonths;
     private final List<BigDecimal> repayDistribution;
@@ -22,6 +23,7 @@ public class CalculationResult {
 
     public CalculationResult(BigDecimal monthlyPayment,
                              BigDecimal overallAmount,
+                             BigDecimal overallPercents,
                              BigDecimal lastPayment,
                              int actualMonths,
                              List<BigDecimal> repayDistribution,
@@ -29,6 +31,7 @@ public class CalculationResult {
                              List<BigDecimal> remaindersDistribution) {
         this.monthlyPayment = monthlyPayment;
         this.overallAmount = overallAmount;
+        this.overallPercents = overallPercents;
         this.lastPayment = lastPayment;
         this.actualMonths = actualMonths;
         this.repayDistribution = Collections.unmodifiableList(repayDistribution);
@@ -50,6 +53,10 @@ public class CalculationResult {
 
     public BigDecimal getOverallAmount() {
         return overallAmount;
+    }
+
+    public BigDecimal getOverallPercents() {
+        return overallPercents;
     }
 
     public List<BigDecimal> getPercentsDistribution() {
