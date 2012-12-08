@@ -40,13 +40,6 @@ public class MortgageCalculator {
         this.monthlyPayment = monthlyPayment;
     }
 
-    private BigDecimal getMonthlyPayment() {
-        if (monthlyPayment==null) {
-            monthlyPayment = calculateMonthlyPayment();
-        }
-        return monthlyPayment;
-    }
-
     public void injectPayment(BigDecimal injectedPayment, int month) {
         lastResult = null;
         if (!injections.containsKey(month)) {
@@ -67,23 +60,34 @@ public class MortgageCalculator {
 
     }
 
-    public CalculationResult calculateDistributions() {
+    public CalculationResult calculateDistributions() throws CalculationException {
         if (lastResult!=null) {
             return lastResult;
         }
 
-        BigDecimal remainder = BigDecimal.valueOf(creditSum);
         final BigDecimal monthPercent = percent.divide(BigDecimal.valueOf(1200), MATH_CONTEXT);
+        if (monthPercent.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new CalculationException(CalculationException.ErrorType.INVALID_PERCENT);
+        }
+
+        if (monthlyPayment==null) {
+            monthlyPayment = calculateMonthlyPayment();
+        }
+
+        BigDecimal remainder = BigDecimal.valueOf(creditSum);
         List<BigDecimal> percentsDistribution = new ArrayList<BigDecimal>(estimatedMonths);
         List<BigDecimal> repayDistribution = new ArrayList<BigDecimal>(estimatedMonths);
         List<BigDecimal> remaindersDistribution = new ArrayList<BigDecimal>(estimatedMonths);
-        int month =0;
+        int month = 0;
         BigDecimal overallAmount = BigDecimal.ZERO;
-        while (remainder.compareTo(getMonthlyPayment().multiply(BigDecimal.valueOf(LAST_PAYMENT_THRESHOLD)))>0) {
+        while (remainder.compareTo(monthlyPayment.multiply(BigDecimal.valueOf(LAST_PAYMENT_THRESHOLD)))>0) {
             month++;
             BigDecimal percentSum = calculatePercents(remainder, monthPercent);
-            BigDecimal repay = getMonthlyPayment().subtract(percentSum);
-            overallAmount = overallAmount.add(getMonthlyPayment());
+            BigDecimal repay = monthlyPayment.subtract(percentSum);
+            if (repay.compareTo(BigDecimal.ZERO)==0) {
+                throw new CalculationException(CalculationException.ErrorType.ZERO_REPAY);
+            }
+            overallAmount = overallAmount.add(monthlyPayment);
             if (injections.containsKey(month)) {
                 remainder = remainder.subtract(injections.get(month));
                 overallAmount = overallAmount.add(injections.get(month));
@@ -98,6 +102,7 @@ public class MortgageCalculator {
         remaindersDistribution.add(BigDecimal.ZERO);
         BigDecimal lastPayment = remainder.add(percentsDistribution.get(month));
         int actualMonths = month+1;
+        overallAmount= overallAmount.add(lastPayment);
         lastResult = new CalculationResult(monthlyPayment,
                 overallAmount,
                 overallAmount.subtract(BigDecimal.valueOf(creditSum)),
@@ -112,34 +117,5 @@ public class MortgageCalculator {
     private BigDecimal calculatePercents(BigDecimal base, BigDecimal percentsRate) {
         return base.multiply(percentsRate).setScale(2,RoundingMode.HALF_UP);
     }
-
-    public static void main(String[] args) {
-        //TODO: to unit test
-        MortgageCalculator calc = new MortgageCalculator();
-        calc.setCreditSum(3500000);
-        calc.setPercent(new BigDecimal("14.0"));
-        calc.setEstimatedMonths(120);
-        CalculationResult result = calc.calculateDistributions();
-        System.out.println(result.getMonthlyPayment());
-        System.out.println(result.getPercentsDistribution());
-        System.out.println(result.getRepayDistribution());
-        System.out.println(result.getRemaindersDistribution());
-        System.out.println(result.getLastPayment());
-        System.out.println(result.getActualMonths());
-        System.out.println(result.getOverallAmount());
-        calc.injectPayment(BigDecimal.valueOf(200000),12);
-        calc.injectPayment(BigDecimal.valueOf(200000),24);
-        calc.injectPayment(BigDecimal.valueOf(200000),36);
-        calc.injectPayment(BigDecimal.valueOf(200000),48);
-        result = calc.calculateDistributions();
-        System.out.println(result.getMonthlyPayment());
-        System.out.println(result.getPercentsDistribution());
-        System.out.println(result.getRepayDistribution());
-        System.out.println(result.getRemaindersDistribution());
-        System.out.println(result.getLastPayment());
-        System.out.println(result.getActualMonths());
-        System.out.println(result.getOverallAmount());
-    }
-
 }
 
