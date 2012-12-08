@@ -12,13 +12,6 @@ import com.alext.hypothec.model.MortgageCalculator;
 
 import java.math.BigDecimal;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Admin
- * Date: 24.11.12
- * Time: 14:10
- * To change this template use File | Settings | File Templates.
- */
 public class InitialDataFragment extends Fragment {
 
     private final MortgageCalculator calculator = new MortgageCalculator();
@@ -31,7 +24,7 @@ public class InitialDataFragment extends Fragment {
         return mainView;
     }
 
-    public CalculationResult calculate() {
+    public CalculationResult calculate() throws CalculationException {
         if (Utils.isEmptyField((EditText)mainView.findViewById(R.id.credit_sum)) ||
             Utils.isEmptyField((EditText)mainView.findViewById(R.id.percentage)) ||
             Utils.isEmptyField((EditText)mainView.findViewById(R.id.credit_duration_month))) {
@@ -50,11 +43,7 @@ public class InitialDataFragment extends Fragment {
         } else {
             calculator.setMonthlyPayment(Utils.editTextToBigDecimal((EditText)mainView.findViewById(R.id.monthly_payment)));
         }
-        try {
-            return calculator.calculateDistributions();
-        } catch (CalculationException e) {
-            return null;
-        }
+        return calculator.calculateDistributions();
     }
 
     void injectPayment(BigDecimal injectPayment, int month) {

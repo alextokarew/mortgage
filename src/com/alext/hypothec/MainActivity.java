@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import com.alext.hypothec.model.CalculationException;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -35,7 +36,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             public void onPageSelected(int position) {
                 getActionBar().setSelectedNavigationItem(position);
                 if (position==RESULTS_ITEM) {
-                    resultsWrapperFragment.setResult(initialDataFragment.calculate());
+                    try {
+                        resultsWrapperFragment.setResult(initialDataFragment.calculate());
+                    }catch (CalculationException e) {
+                        resultsWrapperFragment.setException(e);
+                    }
                 }
             }
         });

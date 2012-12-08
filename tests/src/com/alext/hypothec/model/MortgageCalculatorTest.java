@@ -3,15 +3,7 @@ package com.alext.hypothec.model;
 import junit.framework.TestCase;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Admin
- * Date: 29.11.12
- * Time: 7:44
- * To change this template use File | Settings | File Templates.
- */
 public class MortgageCalculatorTest extends TestCase {
 
     private MortgageCalculator calc = new MortgageCalculator();
@@ -54,10 +46,10 @@ public class MortgageCalculatorTest extends TestCase {
         calc.setEstimatedMonths(120);
 
         try {
-            CalculationResult result = calc.calculateDistributions();
+            calc.calculateDistributions();
             fail("Must throw a CalculationException");
         } catch (CalculationException e) {
-            assertSame(CalculationException.ErrorType.ZERO_REPAY, e.getType());
+            assertSame(ErrorType.ZERO_REPAY, e.getType());
         }
     }
 
@@ -70,7 +62,7 @@ public class MortgageCalculatorTest extends TestCase {
             CalculationResult result = calc.calculateDistributions();
             fail("Must throw a CalculationException");
         } catch (CalculationException e) {
-            assertSame(CalculationException.ErrorType.INVALID_PERCENT, e.getType());
+            assertSame(ErrorType.INVALID_PERCENT, e.getType());
         }
     }
 

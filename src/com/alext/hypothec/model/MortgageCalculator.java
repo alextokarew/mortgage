@@ -67,7 +67,7 @@ public class MortgageCalculator {
 
         final BigDecimal monthPercent = percent.divide(BigDecimal.valueOf(1200), MATH_CONTEXT);
         if (monthPercent.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new CalculationException(CalculationException.ErrorType.INVALID_PERCENT);
+            throw new CalculationException(ErrorType.INVALID_PERCENT);
         }
 
         if (monthlyPayment==null) {
@@ -85,7 +85,7 @@ public class MortgageCalculator {
             BigDecimal percentSum = calculatePercents(remainder, monthPercent);
             BigDecimal repay = monthlyPayment.subtract(percentSum);
             if (repay.compareTo(BigDecimal.ZERO)==0) {
-                throw new CalculationException(CalculationException.ErrorType.ZERO_REPAY);
+                throw new CalculationException(ErrorType.ZERO_REPAY);
             }
             overallAmount = overallAmount.add(monthlyPayment);
             if (injections.containsKey(month)) {

@@ -24,5 +24,9 @@
     <string name="inject_amount">Сумма</string>
     <string name="inject_month">Месяц внесения</string>
     <string name="required_fields">Красным отмечены обязательные поля</string>
+
+    <string name="unable_to_calculate">Невозможно произвести расчет</string>
     <string name="no_required_fields">Для расчета необходимо задать следующие параметры:</string>
+    <string name="invalid_percent">Процентная ставка должна быть больше 0</string>
+    <string name="zero_repay">Некорректные исходные данные</string>
 </resources>

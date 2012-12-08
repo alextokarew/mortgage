@@ -1,32 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
-    <TextView
-        android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:text="@string/no_required_fields"
-        android:textSize="24dp"
-        />
-    <TextView
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/attention"
+            android:layout_margin="3dp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/unable_to_calculate"
+            style="@android:style/TextAppearance.DeviceDefault.Medium" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:id="@+id/insufficient_parameters"
+        >
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:text="@string/no_required_fields"
+            style="@android:style/TextAppearance.DeviceDefault.Large" />
+        <TextView
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:text="@string/credit_sum"
-            android:textSize="20dp"
-            />
-    <TextView
+            style="@android:style/TextAppearance.DeviceDefault.Medium" />
+        <TextView
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:text="@string/credit_duration_month"
-            android:textSize="20dp"
-            />
-    <TextView
+            style="@android:style/TextAppearance.DeviceDefault.Medium" />
+        <TextView
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:text="@string/percentage"
-            android:textSize="20dp"
-            />
+            style="@android:style/TextAppearance.DeviceDefault.Medium" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/zero_repay"
+        android:id="@+id/zero_repay"
+        android:visibility="gone"
+        style="@android:style/TextAppearance.DeviceDefault.Large" />
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/invalid_percent"
+        android:id="@+id/invalid_percent"
+        android:visibility="gone"
+        style="@android:style/TextAppearance.DeviceDefault.Large" />
 
 </LinearLayout>
