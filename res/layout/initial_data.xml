@@ -1,56 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:orientation="vertical">
     <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/credit_sum"
             android:textColor="@color/red"
             />
     <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/credit_sum"
             android:inputType="number"
             />
     <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/credit_duration_month"
             android:textColor="@color/red"
             />
     <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/credit_duration_month"
             android:inputType="number"/>
     <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/percentage"
             android:textColor="@color/red"
             />
     <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/percentage"
             android:inputType="numberDecimal"/>
     <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/monthly_payment"
             />
     <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/monthly_payment"
             android:inputType="numberDecimal"/>
     <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/required_fields"
             />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inject_payment"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
+        android:textSize="16dp"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/injected_payments"
+        android:layout_gravity="right|center_vertical"/>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inject_payment_form">
+
+        <EditText
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/inject_month"
+            android:id="@+id/inject_payment_month"
+            android:layout_gravity="left|center_vertical"
+            android:layout_alignParentLeft="true"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/inject_payment_amount"
+            android:layout_toLeftOf="@+id/inject_payment_button"
+            android:layout_toRightOf="@+id/inject_payment_month"
+            android:layout_alignBottom="@+id/inject_payment_month"
+            android:layout_alignTop="@+id/inject_payment_month"
+            android:hint="@string/inject_amount"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/inject_payment_button"
+            android:src="@android:drawable/ic_menu_add"
+            android:contentDescription="@string/add"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/inject_payment_month"
+            android:layout_alignBottom="@+id/inject_payment_month"
+            android:background="@android:color/background_dark"/>
+    </RelativeLayout>
+
 </LinearLayout>

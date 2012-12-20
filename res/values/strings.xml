@@ -7,6 +7,7 @@
 
     <string name="ok">ОК</string>
     <string name="cancel">Отмена</string>
+    <string name="add">Добавить</string>
 
     <string name="credit_sum">Сумма кредита</string>
     <string name="credit_duration_month">Срок кредита, мес</string>
@@ -17,7 +18,7 @@
     <string name="overall_percents">Общая сумма процентов</string>
     <string name="calculate">Рассчитать</string>
 
-    <string name="inject_payment">Досрочный платеж</string>
+    <string name="inject_payment">Досрочные платежи</string>
     <string name="payments_distribution">Распределение платежей</string>
     <string name="reminder_distribution">Остаток по месяцам</string>
 
