@@ -8,6 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import com.alext.hypothec.model.CalculationException;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -72,4 +76,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
+
+    public void injectPaymentClick(View view) {
+        EditText injectPaymentAmount = (EditText) findViewById(R.id.inject_payment_amount);
+        EditText injectPaymentMonth = (EditText) findViewById(R.id.inject_payment_month);
+        if (Utils.isEmptyField(injectPaymentAmount) || Utils.isEmptyField(injectPaymentMonth)) {
+            return;
+        }
+        initialDataFragment.injectPayment(Utils.editTextToBigDecimal(injectPaymentAmount), Utils.editTextToInt(injectPaymentMonth));
+
+        TextView textView = new TextView(this);
+        textView.setText("olololo");
+        ListView injectedPayments = (ListView)findViewById(R.id.injected_payments);
+        injectedPayments.addFooterView(textView);
+
+        injectPaymentAmount.setText("");
+        injectPaymentMonth.setText("");
+    }
 }

@@ -27,12 +27,7 @@ public class InjectPaymentDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (Utils.isEmptyField((EditText)rootView.findViewById(R.id.inject_amount)) ||
-                                Utils.isEmptyField((EditText)rootView.findViewById(R.id.inject_month))) {
-                            return;
-                        }
-                        initialDataFragment.injectPayment(Utils.editTextToBigDecimal((EditText) rootView.findViewById(R.id.inject_amount)),
-                                Utils.editTextToInt((EditText) rootView.findViewById(R.id.inject_month)));
+
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

@@ -49,4 +49,5 @@ public class InitialDataFragment extends Fragment {
     void injectPayment(BigDecimal injectPayment, int month) {
         calculator.injectPayment(injectPayment,month);
     }
+
 }
